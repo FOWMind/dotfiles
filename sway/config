@@ -115,11 +115,6 @@ input * {
     xkb_options "grp:win_space_toggle"
 }
 
-exec_always {
-  gsettings set org.gnome.desktop.interface gtk-theme "TokyoNight"
-  gsettings set org.gnome.desktop.interface icon-theme "Catppuccin-Frappe-Peach"
-}
-
 ## Key bindings
 
 # Audio control
@@ -248,7 +243,7 @@ bindsym $mod+Shift+x focus mode_toggle
 # Move focus to the parent container
 bindsym $mod+a focus parent
 
-# Resizing containers:
+# Resize containers
 bindsym $mod+r mode "resize"
 mode "resize" {
   # left will shrink the containers width
@@ -271,11 +266,16 @@ mode "resize" {
   bindsym Escape mode "default"
 }
 
-# Status bar:
-# Read `man 5 sway-bar` for more information about this section.
+## Status bar
 bar {
     swaybar_command waybar
 }
 
-# Include default sway config
+## Theme
+exec_always {
+  gsettings set org.gnome.desktop.interface gtk-theme "TokyoNight"
+  gsettings set org.gnome.desktop.interface icon-theme "Catppuccin-Frappe-Peach"
+}
+
+## Include default sway config
 include /etc/sway/config.d/*

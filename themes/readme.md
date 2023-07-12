@@ -1,6 +1,8 @@
+### How to
+Clone and install
+
 ### Theme
 [Tokyo Night theme](https://github.com/stronk-dev/Tokyo-Night-Linux#installation)
-Clone and install
 
 ### Icons
 [mint-l icons](https://aur.archlinux.org/packages/mint-l-icons)

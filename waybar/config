@@ -1,0 +1,124 @@
+{
+    "modules-left": ["custom/arch", "sway/workspaces", "cpu", "memory", "temperature"],
+    "modules-center": ["clock"],
+    "modules-right": ["custom/spotify", "tray", "custom/weather", "custom/notification" ,"network", "pulseaudio", "battery"],
+
+    "sway/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "♠",
+            "2": "♥",
+            "3": "♦",
+            "4": "♣",
+            "5": "₿",
+            "6": "⟠",
+            "7": "₮",
+            "8": "Ð",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+
+    "clock": {
+        "format": "{:%e de %B de %Y %H:%M}",
+        "timezone": "America/Buenos Aires",
+        "tooltip": false
+    },
+    "cpu": {
+        "format": " {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "format": " {}%",
+        "tooltip": false
+    },
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}",
+        "format-icons": ["", "", "", "", ""],
+        "max-length": 25,
+        "tooltip": false
+    },
+    "network": {
+        "format": "{icon}",
+        "format-alt": "{ipaddr}/{cidr} {icon}",
+        "format-alt-click": "click-right",
+        "format-wifi": "{icon} ({signalStrength}%)",
+        "format-icons": {
+            "wifi": ["睊", "直" ,""],
+            "ethernet": [""],
+            "disconnected": [""]
+        },
+        "on-click": "kitty nmtui",
+        "tooltip-format": "{ifname}: {ipaddr}",
+    },
+    "pulseaudio": {
+      // "scroll-step": 1, // %, can be a float
+      "format": "{icon} {volume}% {format_source}",
+      "format-bluetooth": "{icon} {volume}% {format_source}",
+      "format-bluetooth-muted": " {format_source}",
+      "format-muted": "  {format_source}",
+      "format-source": " {volume}%",
+      "format-source-muted": "",
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "🎧",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", ""]
+      },
+      "on-click": "pavucontrol"
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10,
+        "show-passive-items": true
+    },
+    "custom/arch": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "kitty"
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "format": " {temperatureC}°C",
+        "interval": 2,
+        "tooltip": false
+    },
+    "custom/spotify": {
+        //"exec": "playerctl metadata --format '{{ artist }} - {{ title }}'",
+        "exec": "playerctl metadata --format '{{ lc(artist) }}'",
+        "interval": 10,
+        "format": "🎵 {}",
+        "tooltip": false
+    },
+    "custom/weather": {
+        "exec": "curl -s wttr.in/Buenos+Aires?format=2",
+        "interval": 100,
+        "format": "{}",
+        "tooltip": false
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+          "notification": "",
+          "none": "",
+          "dnd-notification": "",
+          "dnd-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    }
+}

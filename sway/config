@@ -1,0 +1,281 @@
+# Read `man 5 sway` for a complete reference.
+
+## Variables
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+
+# Keys to change between windows, move them, etc
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Terminal emulator to use
+set $term kitty
+
+# App launcher/manager to use
+set $menu wofi --show drun
+
+## Screen/Display/Output
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+# Custom resolution
+# Example configuration: output HDMI-A-1 resolution 1920x1080 position 1920,0
+output HDMI-A-1 resolution --custom 1920x1080
+
+#output DP-1 resolution --custom 1366x768
+#output * resolution --custom 1366x768
+
+# Background - Example: output <OUTPUT-NAME> bg <PATH-TO-IMAGE> <FILL-MODE>
+output * bg ~/Imágenes/wallpaper.jpg fill
+
+## Windows
+# Disable window title
+for_window [class="^.*"] border pixel 3
+default_border pixel 3
+default_floating_border pixel 3
+hide_edge_borders smart
+
+# Disable focus on mouse over
+focus_follows_mouse no
+
+# Enable floating mode for the specified apps
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="thunar"] floating enable
+for_window [app_id="discord"] floating enable
+for_window [app_id="discord-ptb"] floating enable
+
+# Limit window size
+floating_maximum_size -1 x -1
+
+# Gaps
+# syntax: gaps inner|outer|horizontal|vertical|top|right|bottom|left <amount>
+# the inner affects spacing around each view
+# the outer affects the spacing around each workspace
+# To reduce or remove outer gaps, outer gaps can be set to a negative value.
+gaps inner 5
+gaps outer 1
+gaps top 1
+gaps bottom 1
+
+# Hide gaps when there is only 1 window
+smart_gaps on
+
+
+# Windows border colors
+# Syntax: client.<class> <border> <background> <text> [<indicator> [<child_border>]]
+
+# The default colors are:
+# class	                 border	    background	text        indicator	  child_border			
+# background	           n/a	        #ffffff     n/a	        n/a	        n/a
+# focused	               #4c7899      #285577	    #ffffff	    #2e9ef4	    #285577
+# focused_inactive	     #333333	    #5f676a	    #ffffff	    #484e50	    #5f676a
+# unfocused	             #333333	    #222222	    #888888	    #292d2e	    #222222
+# urgent	               #2f343a	    #900000	    #ffffff	    #900000	    #900000
+# placeholder	           #000000	    #0c0c0c	    #ffffff	    #000000 	  #0c0c0c
+#################################################################################
+client.focused           #cc8a5e      #16161d     #c0caf5     #cc8a5e     #cc8a5e
+client.focused_inactive  #16161d      #16161d     #c0caf5     #16161d     #16161d
+client.unfocused         #16161d      #16161d     #c0caf5     #16161d     #16161d
+
+
+## Workspaces
+# Default workspaces for apps
+assign [class="discord"] → number 3
+assign [class="discord-ptb"] → number 3
+assign [class="Spotify"] → number 4
+
+## Idle
+# Example configuration:
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+## Input
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Example configuration:
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+
+#input "6700:11303:USB_USB_Keyboard" {
+#
+#}
+
+input * {
+    xkb_layout "latam,us,ru"
+    xkb_options "grp:win_space_toggle"
+}
+
+exec_always {
+  gsettings set org.gnome.desktop.interface gtk-theme "TokyoNight"
+  gsettings set org.gnome.desktop.interface icon-theme "Catppuccin-Frappe-Peach"
+}
+
+## Key bindings
+
+# Audio control
+bindsym Ctrl+Mod1+M exec amixer set Master toggle
+bindsym $mod+Shift+Up exec amixer set Master 5%+
+bindsym $mod+Shift+Down exec amixer set Master 5%-
+
+# Screenshots
+# Requires:
+# grim - do the screenshot
+# slurp - select an area in the screen
+# wl-clipboard - copy to the clipboard
+# swaymsg - Get the screen device name
+# jq - Process the JSON
+
+set $img_path ~/Imágenes/$(date +%Y-%m-%d_%H-%m-%s).png
+set $capture_monitor grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')
+set $capture_area grim -g "$(slurp)"
+
+# Capture, save and copy the focused monitor
+bindsym Print exec IMG=$img_path && $capture_monitor $IMG && wl-copy < $IMG
+
+# Capture, save and copy the selected area of the screen
+bindsym $mod+Shift+s exec IMG=$img_path && $capture_area $IMG && wl-copy < $IMG
+
+# Open Thunar explorer
+bindsym $mod+t exec thunar
+
+# Start a terminal
+bindsym $mod+Return exec $term
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Scratchpad
+# Sway has a "scratchpad", which is a bag of holding for windows
+# You can send windows there and get them back later
+
+# Move the focused window to scratchpad
+bindsym $mod+Shift+m move scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window
+# If there are multiple scratchpad windows, this command cycles through them
+bindsym $mod+m scratchpad show
+bindsym $mod+minus scratchpad show
+
+# Start app launcher
+bindsym $mod+d exec $menu
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Exit sway (logout)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Moving around:
+# Change the focused window
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# Or use $mod+[Up|Down|Left|Right] for arrow keys
+#bindsym $mod+Left focus left
+#bindsym $mod+Down focus down
+#bindsym $mod+Up focus up
+#bindsym $mod+Right focus right
+
+# Move the focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# Workspaces
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# Move focused container (window) to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+# Layout
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits respectively
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+z floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+Shift+x focus mode_toggle
+
+# Move focus to the parent container
+bindsym $mod+a focus parent
+
+# Resizing containers:
+bindsym $mod+r mode "resize"
+mode "resize" {
+  # left will shrink the containers width
+  # right will grow the containers width
+  # up will shrink the containers height
+  # down will grow the containers height
+  bindsym $left resize shrink width 20px
+  bindsym $down resize grow height 20px
+  bindsym $up resize shrink height 20px
+  bindsym $right resize grow width 20px
+
+  # Ditto, with arrow keys
+  bindsym Left resize shrink width 20px
+  bindsym Down resize grow height 20px
+  bindsym Up resize shrink height 20px
+  bindsym Right resize grow width 20px
+
+  # Return to default mode
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+# Status bar:
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    swaybar_command waybar
+}
+
+# Include default sway config
+include /etc/sway/config.d/*

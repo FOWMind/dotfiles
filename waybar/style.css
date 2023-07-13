@@ -84,12 +84,13 @@ window#waybar {
 
 #tray {
   margin: 3px 2px;
-  border-radius: 12px;
+  /* border-radius: 12px; */
 }
 
 #tray * {
-  padding: 0 6px;
-  border-left: 1px solid black;
+  /* padding: 0 6px; */
+  margin: 0;
+  /* border-left: 1px solid black; */
 }
 
 #tray *:first-child {

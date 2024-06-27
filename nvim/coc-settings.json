@@ -1,0 +1,11 @@
+{
+  "rpc.largeImage": "Editando un archivo {LANG}",
+  "rpc.problemsText": "- {count} problemas",
+  "rpc.detailsViewing": "Revisando {problems}",
+  "rpc.lowerDetailsViewing": "{file_name}, línea {current_line} de {total_lines}",
+  "rpc.detailsIdling": "Inactivo",
+  "rpc.detailsEditing": "Editando {problems}",
+  "rpc.lowerDetailsEditing": "{file_name}, línea {current_line} de {total_lines}",
+  "rpc.buttonEnabled": false,
+  "coc.preferences.formatOnSave": true
+}

@@ -49,6 +49,7 @@ return require('packer').startup(function(use)
   }
   
   -- Colorscheme
+  use 'martinsione/darkplus.nvim'
   use 'verf/deepwhite.nvim'
   use 'nikolvs/vim-sunbather'
   use 'tiagovla/tokyodark.nvim'
@@ -148,6 +149,15 @@ return require('packer').startup(function(use)
       'onsails/lspkind-nvim',
     }
   }
+
+  -- Breadcrumbs
+  use {
+    'SmiteshP/nvim-navic',
+    requires = 'LunarVim/breadcrumbs.nvim'
+  }
+
+  -- Line movement
+  use 'booperlv/nvim-gomove'
   
   -- Tailwind tools
   use {

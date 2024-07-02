@@ -150,12 +150,10 @@ _G.packer_plugins = {
     path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\colorbuddy.nvim",
     url = "https://github.com/tjdevries/colorbuddy.nvim"
   },
-  ["dashboard-nvim"] = {
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\opt\\dashboard-nvim",
-    url = "https://github.com/nvimdev/dashboard-nvim"
+  ["darkplus.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\darkplus.nvim",
+    url = "https://github.com/martinsione/darkplus.nvim"
   },
   decay = {
     loaded = true,
@@ -277,6 +275,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-colorizer.lua",
     url = "https://github.com/norcalli/nvim-colorizer.lua"
   },
+  ["nvim-gomove"] = {
+    loaded = true,
+    path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-gomove",
+    url = "https://github.com/booperlv/nvim-gomove"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-lspconfig",
@@ -316,6 +319,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\sherbet.nvim",
     url = "https://github.com/lewpoly/sherbet.nvim"
+  },
+  ["startup.nvim"] = {
+    config = { "\27LJ\2\nL\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\ntheme\14dashboard\nsetup\fstartup\frequire\0" },
+    loaded = true,
+    path = "C:\\Users\\Usuario\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\startup.nvim",
+    url = "https://github.com/startup-nvim/startup.nvim"
   },
   ["tailwind-tools.nvim"] = {
     loaded = true,
@@ -365,17 +374,14 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: startup.nvim
+time([[Config for startup.nvim]], true)
+try_loadstring("\27LJ\2\nL\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\ntheme\14dashboard\nsetup\fstartup\frequire\0", "config", "startup.nvim")
+time([[Config for startup.nvim]], false)
 -- Config for: Comment.nvim
 time([[Config for Comment.nvim]], true)
 try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
 time([[Config for Comment.nvim]], false)
-vim.cmd [[augroup packer_load_aucmds]]
-vim.cmd [[au!]]
-  -- Event lazy-loads
-time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'dashboard-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
-time([[Defining lazy-load event autocommands]], false)
-vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

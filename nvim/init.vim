@@ -75,6 +75,9 @@ nnoremap <silent><leader>$ <Cmd>BufferLineGoToBuffer -1<CR>
 "" Toggle terminal
 nnoremap <silent><leader>tt <Cmd>ToggleTerm<CR>
 
+"" Open new terminal
+nnoremap <silent><leader><S-t> <Cmd>ToggleTerm<CR>
+
 "" Exit terminal mode
 tnoremap <Esc> <C-\><C-n>
 
@@ -94,11 +97,20 @@ nnoremap <C-M-J> <Cmd>WinShift down<CR>
 nnoremap <C-M-K> <Cmd>WinShift up<CR>
 nnoremap <C-M-L> <Cmd>WinShift right<CR>
 
-" Swap two windows:
+" Swap two windows
 nnoremap <C-W>X <Cmd>WinShift swap<CR>
+
+" Resize windows
+nnoremap <C-M-w> <Cmd>:resize +1<CR>
+nnoremap <C-M-s> <Cmd>:resize -1<CR>
+nnoremap <C-M-d> <Cmd>:vertical resize +1<CR>
+nnoremap <C-M-a> <Cmd>:vertical resize -1<CR>
 
 "" Replace selected text
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left>
+
+"" 'Reassign' visual block
+nnoremap <M-v> <C-v>
 
 "" Enable format on save
 " nnoremap <leader>ef <Cmd>FormatEnable<CR>
